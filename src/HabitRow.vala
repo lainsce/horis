@@ -84,8 +84,12 @@ public class Horis.HabitRow : Gtk.ListBoxRow {
         };
         string[] day_abbrs = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 
+        var today = new GLib.DateTime.now_local ();
+        int start_index = today.get_day_of_week () - 1;
+
         for (int i = 0; i < 7; i++) {
-            var date_label = new Gtk.Label (day_abbrs[i]);
+            int index = (start_index + i) % 7;
+            var date_label = new Gtk.Label (day_abbrs[index]);
             date_label.add_css_class ("caption");
             dow_box.append (date_label);
         }
