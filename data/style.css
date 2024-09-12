@@ -1,3 +1,11 @@
+@define-color red #fa6363;
+@define-color yellow #fee562;
+@define-color green #2ec977;
+@define-color blue #4484ff;
+@define-color violet #8f6df1;
+@define-color brown #c38a55;
+@define-color gray #929292;
+
 .day-button:checked .day-name {
   color: @accent_fg_color;
 }
@@ -8,93 +16,93 @@
 }
 
 .day-button.red:checked {
-  background: #fa6363;
+  background: @red;
 }
 .day-button.yellow:checked {
-  background: #fee562;
+  background: @yellow;
 }
 .day-button.green:checked {
-  background: #2ec977;
+  background: @green;
 }
 .day-button.blue:checked {
-  background: #4484ff;
+  background: @blue;
 }
 .day-button.violet:checked {
-  background: #8f6df1;
+  background: @violet;
 }
 .day-button.brown:checked {
-  background: #c38a55;
+  background: @brown;
 }
 .day-button.gray:checked {
-  background: #929292;
+  background: @gray;
 }
 .tag-toggle-red radio {
   box-shadow: none;
-  background: #fa6363;
+  background: @red;
 }
 
 .tag-toggle-yellow radio {
   box-shadow: none;
-  background: #fee562;
+  background: @yellow;
 }
 
 .tag-toggle-green radio {
   box-shadow: none;
-  background: #2ec977;
+  background: @green;
 }
 
 .tag-toggle-blue radio {
   box-shadow: none;
-  background: #4484ff;
+  background: @blue;
 }
 
 .tag-toggle-violet radio {
   box-shadow: none;
-  background: #8f6df1;
+  background: @violet;
 }
 
 .tag-toggle-brown radio {
   box-shadow: none;
-  background: #c38a55;
+  background: @brown;
 }
 
 .tag-toggle-gray radio {
   box-shadow: none;
-  background: #929292;
+  background: @gray;
 }
 
 .day-red.marked {
-  background: #fa6363;
+  background: @red;
   color: @accent_fg_color;
   padding: 0 4px;
 }
 .day-yellow.marked {
-  background: #fee562;
+  background: @yellow;
   color: @accent_fg_color;
   padding: 0 4px;
 }
 .day-green.marked {
-  background: #2ec977;
+  background: @green;
   color: @accent_fg_color;
   padding: 0 4px;
 }
 .day-blue.marked {
-  background: #4484ff;
+  background: @blue;
   color: @accent_fg_color;
   padding: 0 4px;
 }
 .day-violet.marked {
-  background: #8f6df1;
+  background: @violet;
   color: @accent_fg_color;
   padding: 0 4px;
 }
 .day-brown.marked {
-  background: #c38a55;
+  background: @brown;
   color: @accent_fg_color;
   padding: 0 4px;
 }
 .day-gray.marked {
-  background: #929292;
+  background: @gray;
   color: @accent_fg_color;
   padding: 0 4px;
 }
@@ -119,38 +127,38 @@
 }
 
 .day-red.skipped {
-  background: alpha(#fa6363, 0.18);
-  color: #fa6363;
+  background: alpha(@red, 0.18);
+  color: @red;
   padding: 0 4px;
 }
 .day-yellow.skipped {
-  background: alpha(#fee562, 0.18);
-  color: #fee562;
+  background: alpha(@yellow, 0.18);
+  color: @yellow;
   padding: 0 4px;
 }
 .day-green.skipped {
-  background: alpha(#2ec977, 0.18);
-  color: #2ec977;
+  background: alpha(@green, 0.18);
+  color: @green;
   padding: 0 4px;
 }
 .day-blue.skipped {
-  background: alpha(#4484ff, 0.18);
-  color: #4484ff;
+  background: alpha(@blue, 0.18);
+  color: @blue;
   padding: 0 4px;
 }
 .day-violet.skipped {
-  background: alpha(#8f6df1, 0.18);
-  color: #8f6df1;
+  background: alpha(@violet, 0.18);
+  color: @violet;
   padding: 0 4px;
 }
 .day-brown.skipped {
-  background: alpha(#c38a55, 0.18);
-  color: #c38a55;
+  background: alpha(@brown, 0.18);
+  color: @brown;
   padding: 0 4px;
 }
 .day-gray.skipped {
-  background: alpha(#929292, 0.18);
-  color: #929292;
+  background: alpha(@gray, 0.18);
+  color: @gray;
   padding: 0 4px;
 }
 
