@@ -53,17 +53,22 @@ public class Horis.HabitGraph : He.Bin {
 
     private void calculate_percentages() {
         int year = now.get_year();
-        var current = new GLib.DateTime.local(year, 1, 1, 0, 0, 0); // Reusable DateTime object
+        var current = new GLib.DateTime.local(year, 1, 1, 0, 0, 0);
+        int[] month_lengths = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-        for (int month = 1; month <= 12; month++) {
-            var start_of_month = current;
-            var end_of_month = start_of_month.add_months(1).add_days(-1);
+        // Adjust for leap year
+        if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+            month_lengths[1] = 29;
+        }
 
+        int day_of_year = 1;
+        for (int month = 0; month < 12; month++) {
             int marked_days = 0;
             int active_days_count = 0;
+            int month_end = day_of_year + month_lengths[month];
 
-            while (current.compare(end_of_month) <= 0) {
-                int weekday = current.get_day_of_week();
+            while (day_of_year < month_end) {
+                int weekday = ((day_of_year - 1) % 7) + 1;
                 if (active_days[weekday - 1]) {
                     active_days_count++;
                     if (marked_dates.contains(current.format("%Y-%m-%d"))) {
@@ -71,9 +76,10 @@ public class Horis.HabitGraph : He.Bin {
                     }
                 }
                 current = current.add_days(1);
+                day_of_year++;
             }
 
-            monthly_percentages[month - 1] = (active_days_count > 0) ? (int)((double)marked_days / active_days_count * 100) : 0;
+            monthly_percentages[month] = (active_days_count > 0) ? (marked_days * 100) / active_days_count : 0;
         }
     }
 
@@ -108,7 +114,7 @@ public class Horis.HabitGraph : He.Bin {
     private void draw_axes(Cairo.Context cr, int width, int height, int graph_height) {
         cr.set_source_rgb(0.2, 0.2, 0.2);
         for (int i = 0; i <= 100; i += 25) {
-            int y = (height - 6) - (int)(graph_height * (i / 100.0));
+            int y = (height - 6) - (int) (graph_height * (i / 100.0));
             cr.move_to(0, y);
             cr.line_to(width, y);
             cr.stroke();
@@ -117,7 +123,7 @@ public class Horis.HabitGraph : He.Bin {
         cr.set_font_size(12);
         cr.set_source_rgb(0.5, 0.5, 0.5);
         for (int i = 0; i <= 100; i += 25) {
-            int y = (height - 6) - (int)(graph_height * (i / 100.0));
+            int y = (height - 6) - (int) (graph_height * (i / 100.0));
             cr.move_to(0, y);
             cr.show_text("%d%%".printf(i));
         }
@@ -157,7 +163,7 @@ public class Horis.HabitGraph : He.Bin {
             color_map.set("gray", "#929292");
         }
 
-        string color_hex = color_map.get (color_name); // Default to white
+        string color_hex = color_map.get(color_name); // Default to white
         Gdk.RGBA rgba = {};
         if (!rgba.parse(color_hex)) {
             stderr.printf("Invalid color string: %s\n", color_hex);
