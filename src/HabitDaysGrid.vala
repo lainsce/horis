@@ -68,28 +68,24 @@ public class Horis.HabitDaysGrid : He.Bin {
     }
 
     private void add_month_grids() {
-        var last_year = now.add_years(-1).add_days(-1);
         int current_column = 1;
         int current_row = TimeUtil.get_day_of_week(now);
+        var current_date = now;
 
-        for (var current_date = now; current_date.compare(last_year) >= 0; current_date = current_date.add_months(-1)) {
+        for (int i = 0; i < MONTHS_TO_DISPLAY; i++) { // Assuming you want to display 12 months
             add_month_grid(current_date, ref current_column, ref current_row);
+            current_date = current_date.add_months(-1);
         }
     }
 
     private void add_month_grid(DateTime month_start, ref int start_column, ref int start_row) {
         int year = month_start.get_year();
         int month = month_start.get_month();
-        int last_day_of_month = TimeUtil.get_last_day_of_month(year, month);
+        int last_day = TimeUtil.get_last_day_of_month(year, month);
 
-        DateTime current = TimeUtil.create_date(year, month, last_day_of_month);
-
-        if (month_start.get_year() == now.get_year() && month_start.get_month() == now.get_month()) {
-            current = TimeUtil.create_date(year, month, now.get_day_of_month());
-        }
-
-        int start_offset = TimeUtil.get_day_of_week(current);
-        if (start_offset == 7)start_offset = 0;
+        DateTime current = (year == now.get_year() && month == now.get_month())
+            ? TimeUtil.create_date(year, month, now.get_day_of_month())
+            : TimeUtil.create_date(year, month, last_day);
 
         var month_label = new Gtk.Label(month_start.format("%b")) {
             halign = Gtk.Align.CENTER
@@ -98,15 +94,13 @@ public class Horis.HabitDaysGrid : He.Bin {
         grid.attach(month_label, start_column, 0, 1, 1);
 
         int column = start_column;
-        int row = start_row < 1 ? 7 : start_row;
-        int day_of_month = current.get_day_of_month();
+        int row = (int) Math.fmax(start_row, 1);
 
-        while (day_of_month >= 1) {
+        for (int day = current.get_day_of_month(); day >= 1; day--) {
             add_day_button(current, ref column, ref row);
             current = current.add_days(-1);
-            day_of_month--;
-            row--;
-            if (row < 1) {
+
+            if (--row < 1) {
                 row = 7;
                 column++;
             }
