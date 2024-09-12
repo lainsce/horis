@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version = 1.5
+Type = Application
+Name = Horis
+Comment = Habit tracking made fast
+Icon = @ICON_NAME@
+Exec = @COMMAND@ %U
+Terminal = false
+Categories = GTK;GNOME;Utility;
+StartupNotify = true
+SingleMainWindow = true
+X-GNOME-UsesNotifications = true

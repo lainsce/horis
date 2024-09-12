@@ -1,0 +1,88 @@
+using Gtk 4.0;
+using He 1;
+
+menu primary-menu {
+  item (_("About Horis"), "win.about")
+}
+
+template HorisMainWindow : He.ApplicationWindow {
+  default-width: 421;
+  default-height: 720;
+  width-request: 360;
+  height-request: 294;
+
+  Gtk.Overlay {
+    [overlay]
+    He.BottomSheet sheet {
+      preferred-sheet-height: 720;
+      show-handle: false;
+      title: _("New Habit");
+    }
+
+    He.ViewMono view {
+      show-back: false;
+      has-margins: false;
+      stack: main_stack;
+
+      titlewidget: He.ViewTitle vtitle {
+        label: _("Habits");
+      };
+
+      [titlebar-menu]
+      Gtk.MenuButton menu_button {
+        icon-name: "open-menu-symbolic";
+        menu-model: primary-menu;
+      }
+
+      Gtk.Stack main_stack {
+        transition-type: slide_left_right;
+        transition-duration: 200;
+
+        Gtk.StackPage {
+          title: _("Habits");
+          name: "habits";
+          icon-name: "view-list-symbolic";
+          child: Gtk.Box {
+            orientation: vertical;
+            spacing: 12;
+
+            He.TextField search_entry {
+              margin-end: 18;
+              margin-start: 18;
+              is-search: true;
+              is-outline: true;
+              prefix-icon: "system-search-symbolic";
+              placeholder-text: _("Search Habits…");
+            }
+
+            Gtk.ScrolledWindow {
+              vexpand: true;
+              hscrollbar-policy: never;
+
+              Gtk.ListBox main_list {
+                selection-mode: single;
+                halign: center;
+                margin-end: 18;
+                margin-start: 18;
+
+                styles [
+                  "content-list"
+                ]
+              }
+            }
+
+            He.Button add_button {
+              is-pill: true;
+              halign: center;
+              margin-bottom: 18;
+              He.ButtonContent {
+                icon: "list-add-symbolic";
+                label: _("Add Habit…");
+              }
+            }
+          };
+        }
+      }
+    }
+  }
+}
