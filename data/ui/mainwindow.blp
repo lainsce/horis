@@ -46,6 +46,13 @@ template HorisMainWindow : He.ApplicationWindow {
             orientation: vertical;
             spacing: 12;
 
+            He.EmptyPage empty_state_box {
+              icon: "checkbox-checked-symbolic";
+              title: _("No Habits Added");
+              description: _("Add your first habit to start tracking.");
+              button: _("Add First Habit");
+            }
+
             He.TextField search_entry {
               margin-end: 18;
               margin-start: 18;

@@ -20,6 +20,8 @@ public class Horis.MainWindow : He.ApplicationWindow {
     private unowned He.ViewTitle vtitle;
     [GtkChild]
     private unowned He.TextField search_entry;
+    [GtkChild]
+    private unowned He.EmptyPage empty_state_box;
 
     private NewHabitSheet new_habit_sheet;
     private List<Habit> habits;
@@ -88,6 +90,19 @@ public class Horis.MainWindow : He.ApplicationWindow {
         reminder_manager.reminder_triggered.connect (on_reminder_triggered);
 
         load_habits ();
+
+        empty_state_box.action_button.clicked.connect (() => {
+            sheet.show_sheet = true;
+        });
+
+        update_empty_state ();
+    }
+
+    private void update_empty_state () {
+        bool has_habits = habits.length () > 0;
+        empty_state_box.visible = !has_habits;
+        main_list.visible = has_habits;
+        search_entry.visible = has_habits;
     }
 
     private void load_habits () {
@@ -108,6 +123,7 @@ public class Horis.MainWindow : He.ApplicationWindow {
         reminder_manager.add_habit (habit);
         save_habits ();
         sheet.show_sheet = false;
+        update_empty_state ();
     }
 
     private void add_habit_to_list (Habit habit) {
@@ -192,6 +208,7 @@ public class Horis.MainWindow : He.ApplicationWindow {
                     main_list.remove (row);
                     reminder_manager.remove_habit (habit);
                     save_habits ();
+                    update_empty_state ();
                 }
             } catch (Error e) {
                 warning ("Error showing dialog: %s", e.message);
